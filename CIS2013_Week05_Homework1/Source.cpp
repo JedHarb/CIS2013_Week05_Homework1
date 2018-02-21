@@ -85,7 +85,7 @@ Calculation:
 - Take the total number of advances modulus 7.
 - Apply this to the calendar month starting on Sunday as 0 advances, and each advance adds a blank space.
 */
-	int advances = 3;
+	int advances = 5;
 	int difference = y - 1582;
 	int leapYears = 0;
 	int monthAdvances = 0;
@@ -97,50 +97,47 @@ Calculation:
 		{
 			if (leapCheck % 100 == 0)
 			{
-				//cout << leapCheck << " divisible by 100" << endl;
 				if (leapCheck % 400 == 0)
 				{
-					//cout << leapCheck << " divisible by 400" << endl;
 					leapYears++;
 				}
 			}
 			else
 			{
-				//cout << leapCheck << " divisible by 4" << endl;
 				leapYears++;
 			}
 		}
+	}
 
-		if (y % 4 == 0) // if the selected year is a leap year, subtract 1 from the advance count
+	if (y % 4 == 0) // if the selected year is a leap year, subtract 1 from the advance count (so it doesn't kick in on Jan)
+	{
+		if (y % 100 == 0)
+		{
+			if (y % 400 == 0)
+			{
+				leapYears--;
+			}
+		}
+		else
+		{
+			leapYears--;
+		}
+	}
+
+	if (x > 2) // if the selected year is a leap year and it the selected month is after Feb, add 1 back to the advance count (for the leap day)
+	{
+		if (y % 4 == 0)
 		{
 			if (y % 100 == 0)
 			{
 				if (y % 400 == 0)
 				{
-					leapYears--;
+					leapYears++;
 				}
 			}
 			else
 			{
-				leapYears--;
-			}
-		}
-
-		if (x > 2) // if the selected year is a leap year and it the selected month is after Feb, add 1 back to the advance count
-		{
-			if (y % 4 == 0)
-			{
-				if (y % 100 == 0)
-				{
-					if (y % 400 == 0)
-					{
-						leapYears++;
-					}
-				}
-				else
-				{
-					leapYears++;
-				}
+				leapYears++;
 			}
 		}
 	}
@@ -280,29 +277,22 @@ int main()
 		int endProgram = 'y';
 	
 
-		cout << "Choose a month by typing its corresponding number (for example, 11 for November)" << endl;
-
 		while (validChosenMonth == false)
 		{
+			chosenMonth = 0;
+			cout << "Choose a month by typing its corresponding number (for example, 11 for November)" << endl;
 			cin >> chosenMonth;
-			if (chosenMonth > 12 || chosenMonth < 1)
-			{
-				cout << "Sorry, I didn't get that. Choose a number between 1 and 12." << endl;
-			}
-			else
+			if (chosenMonth < 13 && chosenMonth > 0)
 			{
 				validChosenMonth = true;
 			}
 		}
-		cout << "Choose a year between 1582 and 9999 (for example, 1863)" << endl;
+
 		while (validChosenYear == false)
 		{
+			cout << "Choose a year from 1582 to 9999 (for example, 1863)" << endl;
 			cin >> chosenYear;
-			if (chosenYear < 1582 || chosenYear > 9999)
-			{
-				cout << "Sorry, I didn't get that. Choose a year between 1582 and 9999." << endl;
-			}
-			else
+			if (chosenYear > 1581 && chosenYear < 10000)
 			{
 				validChosenYear = true;
 			}
@@ -316,7 +306,7 @@ int main()
 
 		// ask to restart
 
-		cout << endl << "Play again? (Type y for yes.) ";
+		cout << endl << endl << "Play again? (Type y for yes.) ";
 		cin >> play_again;
 		cout << endl;
 	}
