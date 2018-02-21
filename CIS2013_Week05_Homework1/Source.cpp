@@ -73,10 +73,10 @@ void printCalendar(int x, int y) //x = month. y = year.
 (1600, 2000, 2400, etc. are leap years. 1700, 1800, 1900, 2100, etc. are not leap years)
 - This means every 400 years, the same last 2 digits of the year, same day of the month will be the same day of the week.
 (Jan 1 of 1617, 2017, and 2417 are all Sundays.)
-- The Gregorian Calendar was introduced in 1582, so we will set Jan 1 1582 (Wed) as the first choosable day and Dec 31 9999 as the last.
+- The Gregorian Calendar was introduced in 1582, so we will set Jan 1 1582 (Fri) as the first choosable day and Dec 31 9999 as the last.
 
 Calculation:
-- Start at the start date with the number of advances at 3 (for Wednesday).
+- Start at the start date with the number of advances at 5 (for Friday).
 - Given a month and year, subtract the given year from 1582 to get the total years difference (one advance for each year).
 - Also count each leap year between the two (add an additional advance for each).
 - Also add additional advances depending on the month chosen
